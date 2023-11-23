@@ -1,5 +1,6 @@
 # EMSIM
-Exersises in computational electromagnetics. Based on the book computation electromagnetics from Springer. 
+Exersises in computational electromagnetics. Eventually I would like to hook this into FreeCads FEM work bench. Or at least use elements from it such as the mesh generator to create a new open source EM simulation enviornment to do simple things like antennas, simple PCB simualtions, radar cross section. I suspect this will take a long time. 
+
 
 # Introduction
 Simple simulation programs to try out different simulation methods.
