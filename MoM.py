@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 # Have to first set up the matrix to be solved
-# THis is particular to how you solve it
+# This is particular to how you solve it
 # will make a simple feed of a delta gap initially
 # Electric field is just V0/dZ and constant
 # Also use a solution by fulse functions and point matching
@@ -38,4 +38,45 @@ def build_matrix():
     # a known impedance matrix
     # a set of boundary conditions to be applied to the matrix
     # a solution display
+    
+    # this is assuming a delta gap
+    eta = 1 # ?
+    k = 1 # wave number
+    Zm = 1 # impedance of element m
+    b = -(1j/eta)*np.sin(k*Zm)
+    # first assume a simple wire with length lambda/2
+    # want to calculate the input impedance versus length
+    # would like to use a sinusoid basis function but may try others
     pass
+
+def sinusoid_basis(x, k):
+    
+    # xn-1 < x < xn
+    # return np.sin(k*(xn-xn-1))/np.sin(k*(xn-xn-1))
+    
+    # xn < x < xn+1
+    # return np.sin(k*(xn+1-x))/np.sin(k*(xn+1-xn))
+    output = []
+    for n, i in enumerate(x):
+        #if n == 0:
+        #    output.append(0)
+        #elif n == len(x)-1:
+        #    output.append(0)
+        #else:
+        print(n)
+        if n >= len(x)/2:
+            fn = np.sin(k*(i-x[n-1]))
+        if n < len(x)/2:
+            fn = np.sin(k*(x[n+1]-i))
+        output.append(fn)
+            
+    print(output)
+    return output
+
+if __name__ == "__main__":
+    k = 0.25
+    x = np.zeros(25)+1
+    print(x)
+    
+    plt.plot(sinusoid_basis(x,k))
+    plt.show()
