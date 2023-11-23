@@ -73,10 +73,23 @@ def sinusoid_basis(x, k):
     print(output)
     return output
 
-if __name__ == "__main__":
-    k = 0.25
-    x = np.zeros(25)+1
-    print(x)
+
+def charged_wire_1d():
     
-    plt.plot(sinusoid_basis(x,k))
-    plt.show()
+    def build_matrix(n,m,a=0):
+        xb = n*dx
+        xa = (n-1*dx)
+        xm = 1
+        top = (xb - xm) + np.sqrt((xb-xm)**2-a**2)
+        bottom = (xa - xm) + np.sqrt((xa-xm)**2-a**2)
+        z = np.log(top / bottom)
+        
+        # only need to build the first row then copy N times
+        # row = [z1, z2 ... ZN]
+        
+    
+    pass
+
+
+if __name__ == "__main__":
+    charged_wire_1d()
