@@ -76,19 +76,20 @@ def sinusoid_basis(x, k):
 
 def charged_wire_1d():
     
-    def build_matrix(n,dx,a=0.001):
+    def build_matrix(n,dx,a=0):
         output = []
         #output.append(0)
         for i in range(1,n):
-            xb = i*dx
-            xa = (i-1)*dx
-            xm = 1 #this is my current issue?
+            xb = (n+1)*dx
+            xa = (n+1-1)*dx
+            xm = i*dx #this is my current issue?
             
             top = (xb - xm) + np.sqrt((xb-xm)**2-a**2)
             bottom = (xa - xm) + np.sqrt((xa-xm)**2-a**2)
             z = np.log(top / bottom)
             output.append(z)
-            
+        
+        #output = output[int(n/2):-1] + output[int(n/2):-1] 
         # only need to build the first row then copy N times
         # row = [z1, z2 ... ZN][zn, z1, z2 ...zn-1]
         #output.append(0)
@@ -97,25 +98,24 @@ def charged_wire_1d():
         
         for j in range(len(output)):
             out_matrix.append(output)
-            output = [output[-1]] + output[0:len(output)-1] 
-            
+            output = [output[-1]] + output[0:-1] 
+
         out_matrix = np.array(out_matrix)
         return out_matrix
         
         
     bm = 1#4*np.pi#*8.854e-12 # normalise
-    n = 150
-    dx = 0.001
+    n = 1501
+    dx = 1/(n+1)
     
     a_matrix = build_matrix(n,dx)
     b_matrix = [bm for x in a_matrix]
     
-    b_matrix[0] = 0 # boundary conditions zero field on ends
-    b_matrix[-1] = 0 # perhaps these are artificial and the issue is in the matirx
-    
+    b_matrix[-1] = 0 # boundary conditions zero field on ends
+    b_matrix[0] = 0 # perhaps these are artificial and the issue is in the matirx
     solution = conjgradsolve(a_matrix,b_matrix, tol=1e-9)
-    print(solution)
-    plt.plot(solution[0]*8.854e-12*4*np.pi)
+    
+    plt.plot(abs(solution[0]*8.854e-12*4*np.pi))
     plt.show()
 
 if __name__ == "__main__":
